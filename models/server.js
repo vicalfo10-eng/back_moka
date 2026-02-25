@@ -10,6 +10,7 @@ class Server {
         this.port = process.env.PORT
 
         this.paths = {
+            customers:      `${process.env.PATH_URL}/${process.env.STAGE}`,
             login:          `${process.env.PATH_URL}/${process.env.STAGE}`,
             userRegister:   `${process.env.PATH_URL}/${process.env.STAGE}`,
             roles:          `${process.env.PATH_URL}/${process.env.STAGE}`
@@ -46,6 +47,7 @@ class Server {
     }
 
     routes() {
+        this.app.use( this.paths.customers, require( '../routes/customersRoutes' ) )
         this.app.use( this.paths.login, require( '../routes/loginRoutes' ) )
         this.app.use( this.paths.userRegister, require( '../routes/userRegisterRoutes' ) )
         this.app.use( this.paths.roles, require( '../routes/rolesRoutes' ) )
