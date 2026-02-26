@@ -1,10 +1,39 @@
 const { response } = require('express');
 const db = require('../config/db');
-const bcrypt = require('bcrypt');
+
+const getCustomerRegister = async (req, res = response) => {
+
+    const { identificacion } = req.query;
+
+    try {
+
+        // Llamar procedimiento almacenado
+        const [rows] = await db.query(
+            "CALL sp_obtener_cliente(?)",
+            [ identificacion ]
+        )
+
+        const result = rows[0][0] // Resultado del SELECT dentro del SP
+
+        return res.status(result.status).json({
+            ok: result.status === 200,
+            result: result
+        })
+        
+    } catch (error) {
+
+        console.error("Error obteniendo el cliente:", error)
+
+        return res.status(500).json({
+            ok: false,
+            msg: "Error interno del servidor"
+        })
+    }
+}
 
 const postCustomerRegister = async (req, res = response) => {
 
-    const { identificacion, nombre, telefono, correo, activo } = req.body;
+    const { identificacion, nombre, telefono, correo, activo } = req.body
 
     try {
 
@@ -12,25 +41,56 @@ const postCustomerRegister = async (req, res = response) => {
         const [rows] = await db.query(
             "CALL sp_registrar_cliente(?, ?, ?, ?, ?)",
             [ identificacion, nombre, telefono, correo, activo ]
-        );
+        )
+
+        const result = rows[0][0]; // Resultado del SELECT dentro del SP
+
+        return res.status(result.status).json({
+            ok: result.status === 201,
+            msg: result.msg
+        })
+
+    } catch (error) {
+        console.error("Error registrando el cliente:", error)
+
+        return res.status(500).json({
+            ok: false,
+            msg: "Error interno del servidor"
+        })
+    }
+}
+
+const putCustomerRegister = async (req, res = response) => {
+
+    const { identificacion, nombre, telefono, correo, activo } = req.body
+
+    try {
+
+        // Llamar procedimiento almacenado
+        const [rows] = await db.query(
+            "CALL sp_actualizar_cliente(?, ?, ?, ?, ?)",
+            [ identificacion, nombre, telefono, correo, activo ]
+        )
 
         const result = rows[0][0]; // Resultado del SELECT dentro del SP
 
         return res.status(result.status).json({
             ok: result.status === 200,
             msg: result.msg
-        });
+        })
 
     } catch (error) {
-        console.error("Error registrando cliente:", error);
+        console.error("Error actualizando el cliente:", error)
 
         return res.status(500).json({
             ok: false,
             msg: "Error interno del servidor"
-        });
+        })
     }
 }
 
 module.exports = {
-    postCustomerRegister
+    getCustomerRegister,
+    postCustomerRegister,
+    putCustomerRegister
 }
