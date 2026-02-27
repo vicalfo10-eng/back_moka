@@ -89,8 +89,39 @@ const putCustomerRegister = async (req, res = response) => {
     }
 }
 
+const deleteCustomerRegister = async (req, res = response) => {
+
+    const { identificacion } = req.query;
+
+    try {
+
+        // Llamar procedimiento almacenado
+        const [rows] = await db.query(
+            "CALL sp_eliminar_cliente(?)",
+            [ identificacion ]
+        )
+
+        const result = rows[0][0] // Resultado del SELECT dentro del SP
+
+        return res.status(result.status).json({
+            ok: result.status === 200,
+            result: result
+        })
+        
+    } catch (error) {
+
+        console.error("Error eliminando el cliente:", error)
+
+        return res.status(500).json({
+            ok: false,
+            msg: "Error interno del servidor"
+        })
+    }
+}
+
 module.exports = {
     getCustomerRegister,
     postCustomerRegister,
-    putCustomerRegister
+    putCustomerRegister,
+    deleteCustomerRegister
 }

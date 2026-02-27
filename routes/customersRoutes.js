@@ -2,7 +2,7 @@ const { Router } = require('express')
 const { check } = require('express-validator')
 
 const { validationFiels } = require('../middlewares/validation-fields')
-const { getCustomerRegister, postCustomerRegister, putCustomerRegister } = require('../controllers/customersController')
+const { getCustomerRegister, postCustomerRegister, putCustomerRegister, deleteCustomerRegister } = require('../controllers/customersController')
 
 const router = Router()
 
@@ -26,5 +26,10 @@ router.put( '/customer_update', [
     check( 'correo', 'El correo es obligatorio.' ).isEmail(),
     validationFiels
 ], putCustomerRegister )
+
+router.delete( '/customer_delete', [
+    check( 'identificacion', 'El número de identificación es obligatorio.' ).not().isEmpty(),
+    validationFiels
+], deleteCustomerRegister)
 
 module.exports = router
