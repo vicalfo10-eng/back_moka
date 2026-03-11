@@ -1,6 +1,6 @@
-const { response } = require('express');
-const db = require('../config/db');
-const bcrypt = require('bcrypt');
+const { response } = require('express')
+const db = require('../config/db')
+const bcrypt = require('bcrypt')
 
 const postLogin = async (req, res = response) => {
     

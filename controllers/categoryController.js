@@ -1,26 +1,24 @@
 const { response } = require('express')
 const db = require('../config/db')
 
-const getRoles = async (req, res = response) => {
+const getCategoryStatus = async (req, res = response) => {
     
-    //const { correo, contrasena } = req.body
-
     try {
-        const [rol] = await db.query(
-            "SELECT * FROM roles WHERE activo = 1"
+        const [category] = await db.query(
+            "SELECT * FROM categorias WHERE activo = 1"
         )
 
-        if (rol.length === 0)
+        if (category.length === 0)
 
             return res.status(400).json({
                 status: 400,
-                msg: "Roles no existe o esta inactivo." 
+                msg: "Categorías no existe o esta inactivo." 
             })
 
         res.status(200).json({
             status: 200,
-            msg: "Roles obtenidos correctamente",
-            rol
+            msg: "Categorías obtenidas correctamente",
+            category
         })
 
     } catch (error) {
@@ -32,5 +30,5 @@ const getRoles = async (req, res = response) => {
 }
 
 module.exports = {
-    getRoles
+    getCategoryStatus
 }

@@ -2,7 +2,11 @@ const { Router } = require('express')
 const { check } = require('express-validator')
 
 const { validationFiels } = require('../middlewares/validation-fields')
-const { getSupplierRegister, postSupplierRegister, putSupplierRegister, deleteSupplierRegister } = require('../controllers/suppliersRoutes')
+const { getSupplierRegister,
+        getSupplierStatus,
+        postSupplierRegister,
+        putSupplierRegister,
+        deleteSupplierRegister } = require('../controllers/suppliersRoutes')
 
 const router = Router()
 
@@ -10,6 +14,8 @@ router.get( '/supplier_register', [
     check( 'identificacion', 'El número de identificación es obligatorio.' ).not().isEmpty(),
     validationFiels
 ], getSupplierRegister)
+
+router.get( '/supplier_status', [], getSupplierStatus )
 
 router.post( '/supplier_register', [
     check( 'identificacion', 'El número de identificación es obligatorio.' ).not().isEmpty(),

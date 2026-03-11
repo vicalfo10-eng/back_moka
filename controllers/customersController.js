@@ -1,9 +1,9 @@
-const { response } = require('express');
-const db = require('../config/db');
+const { response } = require('express')
+const db = require('../config/db')
 
 const getCustomerRegister = async (req, res = response) => {
 
-    const { identificacion } = req.query;
+    const { identificacion } = req.query
 
     try {
 

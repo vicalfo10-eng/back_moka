@@ -1,9 +1,9 @@
-const { response } = require('express');
-const db = require('../config/db');
+const { response } = require('express')
+const db = require('../config/db')
 
 const getSupplierRegister = async (req, res = response) => {
 
-    const { identificacion } = req.query;
+    const { identificacion } = req.query
 
     try {
 
@@ -27,6 +27,36 @@ const getSupplierRegister = async (req, res = response) => {
         return res.status(500).json({
             ok: false,
             msg: "Error interno del servidor"
+        })
+    }
+}
+
+const getSupplierStatus = async (req, res = response) => {
+    
+    //const { correo, contrasena } = req.body
+
+    try {
+        const [supplier] = await db.query(
+            "SELECT * FROM proveedores WHERE activo = 1"
+        )
+
+        if (supplier.length === 0)
+
+            return res.status(400).json({
+                status: 400,
+                msg: "Proveedores no existe o esta inactivo." 
+            })
+
+        res.status(200).json({
+            status: 200,
+            msg: "Proveedores obtenidos correctamente",
+            supplier
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            status: 500,
+            error: error.message
         })
     }
 }
@@ -121,6 +151,7 @@ const deleteSupplierRegister = async (req, res = response) => {
 
 module.exports = {
     getSupplierRegister,
+    getSupplierStatus,
     postSupplierRegister,
     putSupplierRegister,
     deleteSupplierRegister
