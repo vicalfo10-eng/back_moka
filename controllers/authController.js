@@ -32,8 +32,7 @@ const postLogin = async (req, res = response) => {
         res.status(200).json({
             status: 200,
             msg: "Login correcto",
-            usuario: usuario.nombre,
-            Correo: usuario.correo
+            usuario: usuario
         })
 
     } catch (error) {

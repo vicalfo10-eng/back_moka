@@ -153,8 +153,6 @@ const deleteProductRegister = async (req, res = response) => {
 
         const result = rows[0][0] // Resultado del SELECT dentro del SP
 
-        console.log(rows)
-
         return res.status(result.status).json({
             ok: result.status === 200,
             result: result

@@ -1,6 +1,36 @@
 const { response } = require('express')
 const db = require('../config/db')
 
+const getCategoryRegister = async (req, res = response) => {
+
+    const { id_categoria } = req.query
+
+    try {
+
+        // Llamar procedimiento almacenado
+        const [rows] = await db.query(
+            "CALL sp_obtener_categoria(?)",
+            [ id_categoria ]
+        )
+
+        const result = rows[0][0] // Resultado del SELECT dentro del SP
+
+        return res.status(result.status).json({
+            ok: result.status === 200,
+            result: result
+        })
+        
+    } catch (error) {
+
+        console.error("Error obteniendo la categoría:", error)
+
+        return res.status(500).json({
+            ok: false,
+            msg: "Error interno del servidor"
+        })
+    }
+}
+
 const getCategoryStatus = async (req, res = response) => {
     
     try {
@@ -29,6 +59,98 @@ const getCategoryStatus = async (req, res = response) => {
     }
 }
 
+const postCategoryRegister = async (req, res = response) => {
+
+    const { nombre, descripcion, activo } = req.body
+
+    try {
+
+        // Llamar procedimiento almacenado
+        const [rows] = await db.query(
+            "CALL sp_registrar_categoria(?, ?, ?)",
+            [ nombre, descripcion, activo ]
+        )
+
+        const result = rows[0][0]; // Resultado del SELECT dentro del SP
+
+        return res.status(result.status).json({
+            ok: result.status === 201,
+            msg: result.msg
+        })
+
+    } catch (error) {
+        console.error("Error registrando la categoría:", error)
+
+        return res.status(500).json({
+            ok: false,
+            msg: "Error interno del servidor"
+        })
+    }
+}
+
+const putCategoryRegister = async (req, res = response) => {
+
+    const { id_categoria, nombre, descripcion, activo } = req.body
+
+    try {
+
+        // Llamar procedimiento almacenado
+        const [rows] = await db.query(
+            "CALL sp_actualizar_categoria(?, ?, ?, ?)",
+            [ id_categoria, nombre, descripcion, activo ]
+        )
+
+        const result = rows[0][0]; // Resultado del SELECT dentro del SP
+
+        return res.status(result.status).json({
+            ok: result.status === 200,
+            msg: result.msg
+        })
+
+    } catch (error) {
+        console.error("Error actualizando la categoría:", error)
+
+        return res.status(500).json({
+            ok: false,
+            msg: "Error interno del servidor"
+        })
+    }
+}
+
+const deleteCategoryRegister = async (req, res = response) => {
+
+    const { id_categoria } = req.query;
+
+    try {
+
+        // Llamar procedimiento almacenado
+        const [rows] = await db.query(
+            "CALL sp_eliminar_categoria(?)",
+            [ id_categoria ]
+        )
+
+        const result = rows[0][0] // Resultado del SELECT dentro del SP
+
+        return res.status(result.status).json({
+            ok: result.status === 200,
+            result: result
+        })
+        
+    } catch (error) {
+
+        console.error("Error eliminando la categoría:", error)
+
+        return res.status(500).json({
+            ok: false,
+            msg: "Error interno del servidor"
+        })
+    }
+}
+
 module.exports = {
-    getCategoryStatus
+    getCategoryRegister,
+    getCategoryStatus,
+    postCategoryRegister,
+    putCategoryRegister,
+    deleteCategoryRegister
 }
