@@ -25,6 +25,9 @@ router.post( '/product_register', [
     check('precio')
         .not().isEmpty().withMessage('El precio es obligatorio.')
         .isFloat({ min: 0 }).withMessage('El precio debe ser un número decimal mayor o igual a cero.'),
+    check('impuesto')
+        .not().isEmpty().withMessage('El impuesto es obligatorio.')
+        .isFloat({ min: 0 }).withMessage('El impuesto debe ser un número decimal mayor o igual a cero.'),
     check('stock')
         .not().isEmpty().withMessage('El stock es obligatorio.')
         .isInt({ min: 0 }).withMessage('El stock debe ser un número entero mayor o igual a cero.'),
@@ -42,6 +45,9 @@ router.put( '/product_update', [
     check('precio')
         .not().isEmpty().withMessage('El precio es obligatorio.')
         .isFloat({ min: 0 }).withMessage('El precio debe ser un número decimal mayor o igual a cero.'),
+    check('impuesto')
+        .not().isEmpty().withMessage('El impuesto es obligatorio.')
+        .isFloat({ min: 0 }).withMessage('El impuesto debe ser un número decimal mayor o igual a cero.'),
     check('stock')
         .not().isEmpty().withMessage('El stock es obligatorio.')
         .isInt({ min: 0 }).withMessage('El stock debe ser un número entero mayor o igual a cero.'),

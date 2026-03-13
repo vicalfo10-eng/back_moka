@@ -63,19 +63,20 @@ const getProductStatus = async (req, res = response) => {
 
 const postProductRegister = async (req, res = response) => {
 
-    const { id_categoria, id_proveedor, codigo, nombre, precio, stock, stock_minimo, activo } = req.body
+    const { id_categoria, id_proveedor, codigo, nombre, precio, impuesto, stock, stock_minimo, activo } = req.body
 
     try {
 
         // Llamar procedimiento almacenado
         const [rows] = await db.query(
-            "CALL sp_registrar_producto(?, ?, ?, ?, ?, ?, ?, ?)",
+            "CALL sp_registrar_producto(?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [ 
                 parseInt(id_categoria),
                 parseInt(id_proveedor),
                 codigo,
                 nombre,
                 parseFloat(precio),
+                parseFloat(impuesto),
                 parseInt(stock),
                 parseInt(stock_minimo),
                 activo
@@ -83,8 +84,6 @@ const postProductRegister = async (req, res = response) => {
         )
 
         const result = rows[0][0]; // Resultado del SELECT dentro del SP
-
-        console.log(rows)
 
         return res.status(result.status).json({
             ok: result.status === 201,
@@ -103,19 +102,20 @@ const postProductRegister = async (req, res = response) => {
 
 const putProductRegister = async (req, res = response) => {
 
-    const { id_categoria, id_proveedor, codigo, nombre, precio, stock, stock_minimo, activo } = req.body
+    const { id_categoria, id_proveedor, codigo, nombre, precio, impuesto, stock, stock_minimo, activo } = req.body
 
     try {
 
         // Llamar procedimiento almacenado
         const [rows] = await db.query(
-            "CALL sp_actualizar_producto(?, ?, ?, ?, ?, ?, ?, ?)",
+            "CALL sp_actualizar_producto(?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [ 
                 parseInt(id_categoria),
                 parseInt(id_proveedor),
                 codigo,
                 nombre,
                 parseFloat(precio),
+                parseFloat(impuesto),
                 parseInt(stock),
                 parseInt(stock_minimo),
                 activo
