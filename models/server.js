@@ -16,6 +16,7 @@ class Server {
             product:        `${process.env.PATH_URL}/${process.env.STAGE}`,
             userRegister:   `${process.env.PATH_URL}/${process.env.STAGE}`,
             roles:          `${process.env.PATH_URL}/${process.env.STAGE}`,
+            sales:          `${process.env.PATH_URL}/${process.env.STAGE}`,
             suppliers:      `${process.env.PATH_URL}/${process.env.STAGE}`
         }
 
@@ -56,6 +57,7 @@ class Server {
         this.app.use( this.paths.product, require( '../routes/productsRoutes' ) )
         this.app.use( this.paths.userRegister, require( '../routes/userRegisterRoutes' ) )
         this.app.use( this.paths.roles, require( '../routes/rolesRoutes' ) )
+        this.app.use( this.paths.sales, require( '../routes/salesRoutes' ) )
         this.app.use( this.paths.suppliers, require( '../routes/suppliersRoutes' ) )
     }
 

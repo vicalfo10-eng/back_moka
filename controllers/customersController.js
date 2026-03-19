@@ -31,6 +31,34 @@ const getCustomerRegister = async (req, res = response) => {
     }
 }
 
+const getCustomerAll = async (req, res = response) => {
+
+    try {
+        const [customer] = await db.query(
+            "SELECT * FROM clientes WHERE activo = 1"
+        )
+
+        if (customer.length === 0)
+
+            return res.status(400).json({
+                status: 400,
+                msg: "Cliente no existe o esta inactivo." 
+            })
+
+        res.status(200).json({
+            status: 200,
+            msg: "Clientes obtenidos correctamente",
+            customer
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            status: 500,
+            error: error.message
+        })
+    }
+}
+
 const postCustomerRegister = async (req, res = response) => {
 
     const { identificacion, nombre, telefono, correo, activo } = req.body
@@ -121,6 +149,7 @@ const deleteCustomerRegister = async (req, res = response) => {
 
 module.exports = {
     getCustomerRegister,
+    getCustomerAll,
     postCustomerRegister,
     putCustomerRegister,
     deleteCustomerRegister
