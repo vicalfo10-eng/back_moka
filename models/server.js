@@ -12,6 +12,7 @@ class Server {
         this.paths = {
             category:       `${process.env.PATH_URL}/${process.env.STAGE}`,
             customers:      `${process.env.PATH_URL}/${process.env.STAGE}`,
+            inventory:       `${process.env.PATH_URL}/${process.env.STAGE}`,
             login:          `${process.env.PATH_URL}/${process.env.STAGE}`,
             product:        `${process.env.PATH_URL}/${process.env.STAGE}`,
             userRegister:   `${process.env.PATH_URL}/${process.env.STAGE}`,
@@ -53,6 +54,7 @@ class Server {
     routes() {
         this.app.use( this.paths.category, require( '../routes/categoryRoutes' ) )
         this.app.use( this.paths.customers, require( '../routes/customersRoutes' ) )
+        this.app.use( this.paths.inventory, require( '../routes/inventoryRoutes' ) )
         this.app.use( this.paths.login, require( '../routes/loginRoutes' ) )
         this.app.use( this.paths.product, require( '../routes/productsRoutes' ) )
         this.app.use( this.paths.userRegister, require( '../routes/userRegisterRoutes' ) )
