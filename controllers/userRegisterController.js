@@ -2,6 +2,36 @@ const { response } = require('express')
 const db = require('../config/db')
 const bcrypt = require('bcrypt')
 
+const getUserRegister = async (req, res = response) => {
+
+    const { identificacion } = req.query
+
+    try {
+
+        // Llamar procedimiento almacenado
+        const [rows] = await db.query(
+            "CALL sp_obtener_usuario(?)",
+            [ identificacion ]
+        )
+
+        const result = rows[0][0] // Resultado del SELECT dentro del SP
+
+        return res.status(result.status).json({
+            ok: result.status === 200,
+            result: result
+        })
+        
+    } catch (error) {
+
+        console.error("Error obteniendo el usuario:", error)
+
+        return res.status(500).json({
+            ok: false,
+            msg: "Error interno del servidor"
+        })
+    }
+}
+
 const postUserRegister = async (req, res = response) => {
 
     const { id_rol, identificacion, nombre, correo, contrasena } = req.body
@@ -21,7 +51,7 @@ const postUserRegister = async (req, res = response) => {
         const result = rows[0][0]; // Resultado del SELECT dentro del SP
 
         return res.status(result.status).json({
-            ok: result.status === 200,
+            ok: result.status === 201,
             msg: result.msg
         })
 
@@ -35,6 +65,43 @@ const postUserRegister = async (req, res = response) => {
     }
 }
 
+const putUserRegister = async (req, res = response) => {
+
+    const { identificacion, id_rol, nombre, correo, activo } = req.body
+
+    try {
+
+        // Llamar procedimiento almacenado
+        const [rows] = await db.query(
+            "CALL sp_actualizar_usuario(?, ?, ?, ?, ?)",
+            [ 
+                identificacion,
+                id_rol,
+                nombre,
+                correo,
+                activo
+            ]
+        )
+
+        const result = rows[0][0]; // Resultado del SELECT dentro del SP
+
+        return res.status(result.status).json({
+            ok: result.status === 200,
+            msg: result.msg
+        })
+
+    } catch (error) {
+        console.error("Error actualizando el usuario:", error)
+
+        return res.status(500).json({
+            ok: false,
+            msg: "Error interno del servidor"
+        })
+    }
+}
+
 module.exports = {
-    postUserRegister
+    getUserRegister,
+    postUserRegister,
+    putUserRegister
 }
