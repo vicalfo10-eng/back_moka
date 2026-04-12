@@ -63,13 +63,13 @@ const getProductStatus = async (req, res = response) => {
 
 const postProductRegister = async (req, res = response) => {
 
-    const { id_categoria, id_proveedor, codigo, nombre, precio, impuesto, stock, stock_minimo, activo } = req.body
+    const { id_categoria, id_proveedor, codigo, nombre, precio, impuesto, stock, stock_minimo, activo, id_usuario } = req.body
 
     try {
 
         // Llamar procedimiento almacenado
         const [rows] = await db.query(
-            "CALL sp_registrar_producto(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "CALL sp_registrar_producto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [ 
                 parseInt(id_categoria),
                 parseInt(id_proveedor),
@@ -79,7 +79,8 @@ const postProductRegister = async (req, res = response) => {
                 parseFloat(impuesto),
                 parseInt(stock),
                 parseInt(stock_minimo),
-                activo
+                activo,
+                parseInt(id_usuario)
             ]
         )
 
@@ -102,13 +103,13 @@ const postProductRegister = async (req, res = response) => {
 
 const putProductRegister = async (req, res = response) => {
 
-    const { id_categoria, id_proveedor, codigo, nombre, precio, impuesto, stock, stock_minimo, activo } = req.body
+    const { id_categoria, id_proveedor, codigo, nombre, precio, impuesto, stock, stock_minimo, activo, id_usuario } = req.body
 
     try {
 
         // Llamar procedimiento almacenado
         const [rows] = await db.query(
-            "CALL sp_actualizar_producto(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "CALL sp_actualizar_producto(?, ?, ?, ?, ?, ?, ?, ?)",
             [ 
                 parseInt(id_categoria),
                 parseInt(id_proveedor),
@@ -116,7 +117,6 @@ const putProductRegister = async (req, res = response) => {
                 nombre,
                 parseFloat(precio),
                 parseFloat(impuesto),
-                parseInt(stock),
                 parseInt(stock_minimo),
                 activo
             ]
