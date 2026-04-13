@@ -34,7 +34,7 @@ const getUserRegister = async (req, res = response) => {
 
 const postUserRegister = async (req, res = response) => {
 
-    const { id_rol, identificacion, nombre, correo, contrasena } = req.body
+    const { identificacion, id_rol, nombre, correo, contrasena } = req.body
 
     try {
 
@@ -45,7 +45,7 @@ const postUserRegister = async (req, res = response) => {
         // Llamar procedimiento almacenado
         const [rows] = await db.query(
             "CALL sp_registrar_usuario(?, ?, ?, ?, ?)",
-            [id_rol, identificacion, nombre, correo, hashedPassword]
+            [identificacion, id_rol, nombre, correo, hashedPassword]
         )
 
         const result = rows[0][0]; // Resultado del SELECT dentro del SP
