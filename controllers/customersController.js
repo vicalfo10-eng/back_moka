@@ -61,14 +61,14 @@ const getCustomerAll = async (req, res = response) => {
 
 const postCustomerRegister = async (req, res = response) => {
 
-    const { identificacion, nombre, telefono, correo, activo } = req.body
+    const { identificacion, nombre, telefono, correo, direccion, activo } = req.body
 
     try {
 
         // Llamar procedimiento almacenado
         const [rows] = await db.query(
-            "CALL sp_registrar_cliente(?, ?, ?, ?, ?)",
-            [ identificacion, nombre, telefono, correo, activo ]
+            "CALL sp_registrar_cliente(?, ?, ?, ?, ?, ?)",
+            [ identificacion, nombre, telefono, correo, direccion, activo ]
         )
 
         const result = rows[0][0]; // Resultado del SELECT dentro del SP
@@ -90,14 +90,14 @@ const postCustomerRegister = async (req, res = response) => {
 
 const putCustomerRegister = async (req, res = response) => {
 
-    const { identificacion, nombre, telefono, correo, activo } = req.body
+    const { identificacion, nombre, telefono, correo, direccion, activo } = req.body
 
     try {
 
         // Llamar procedimiento almacenado
         const [rows] = await db.query(
-            "CALL sp_actualizar_cliente(?, ?, ?, ?, ?)",
-            [ identificacion, nombre, telefono, correo, activo ]
+            "CALL sp_actualizar_cliente(?, ?, ?, ?, ?, ?)",
+            [ identificacion, nombre, telefono, correo, direccion, activo ]
         )
 
         const result = rows[0][0]; // Resultado del SELECT dentro del SP
