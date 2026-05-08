@@ -3,16 +3,22 @@ const db = require('../config/db')
 
 const postRoles = async (req, res = response) => {
 
-    const { id_usuario, id_cliente, detalles } = req.body
+    const { id_usuario, id_cliente, tipo_pago, id_config, fecha_primer_pago, detalles } = req.body
 
     try {
 
+        const id_config = (tipo_pago === 'CONTADO' || !id_config) ? null : parseInt(id_config);
+        const fecha_primer_pago = (tipo_pago === 'CONTADO' || !fecha_primer_pago) ? null : fecha_primer_pago;
+
         // Ejecutamos el SP enviando el array de objetos como un string JSON
         const [rows] = await db.query(
-            "CALL sp_registrar_venta(?, ?, ?)",
+            "CALL sp_registrar_venta(?, ?, ?, ?, ?, ?)",
             [
                 id_usuario,
                 id_cliente,
+                tipo_pago,
+                id_config,
+                fecha_primer_pago,
                 JSON.stringify(detalles)
             ]
         )
