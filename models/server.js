@@ -10,17 +10,18 @@ class Server {
         this.port = process.env.PORT
 
         this.paths = {
-            category:       `${process.env.PATH_URL}/${process.env.STAGE}`,
-            customers:      `${process.env.PATH_URL}/${process.env.STAGE}`,
-            dashboard:      `${process.env.PATH_URL}/${process.env.STAGE}`,
-            inventory:      `${process.env.PATH_URL}/${process.env.STAGE}`,
-            login:          `${process.env.PATH_URL}/${process.env.STAGE}`,
-            product:        `${process.env.PATH_URL}/${process.env.STAGE}`,
-            userRegister:   `${process.env.PATH_URL}/${process.env.STAGE}`,
-            reports:        `${process.env.PATH_URL}/${process.env.STAGE}`,
-            roles:          `${process.env.PATH_URL}/${process.env.STAGE}`,
-            sales:          `${process.env.PATH_URL}/${process.env.STAGE}`,
-            suppliers:      `${process.env.PATH_URL}/${process.env.STAGE}`
+            category:               `${process.env.PATH_URL}/${process.env.STAGE}`,
+            creditConfiguration:    `${process.env.PATH_URL}/${process.env.STAGE}`,
+            customers:              `${process.env.PATH_URL}/${process.env.STAGE}`,
+            dashboard:              `${process.env.PATH_URL}/${process.env.STAGE}`,
+            inventory:              `${process.env.PATH_URL}/${process.env.STAGE}`,
+            login:                  `${process.env.PATH_URL}/${process.env.STAGE}`,
+            product:                `${process.env.PATH_URL}/${process.env.STAGE}`,
+            userRegister:           `${process.env.PATH_URL}/${process.env.STAGE}`,
+            reports:                `${process.env.PATH_URL}/${process.env.STAGE}`,
+            roles:                  `${process.env.PATH_URL}/${process.env.STAGE}`,
+            sales:                  `${process.env.PATH_URL}/${process.env.STAGE}`,
+            suppliers:              `${process.env.PATH_URL}/${process.env.STAGE}`
         }
 
         this.dbConnection()
@@ -55,6 +56,7 @@ class Server {
 
     routes() {
         this.app.use( this.paths.category, require( '../routes/categoryRoutes' ) )
+        this.app.use( this.paths.creditConfiguration, require( '../routes/creditConfigurationRoutes' ) )
         this.app.use( this.paths.customers, require( '../routes/customersRoutes' ) )
         this.app.use( this.paths.dashboard, require( '../routes/dashboardRoutes' ) )
         this.app.use( this.paths.inventory, require( '../routes/inventoryRoutes' ) )

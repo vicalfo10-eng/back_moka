@@ -7,8 +7,8 @@ const postRoles = async (req, res = response) => {
 
     try {
 
-        const id_config = (tipo_pago === 'CONTADO' || !id_config) ? null : parseInt(id_config);
-        const fecha_primer_pago = (tipo_pago === 'CONTADO' || !fecha_primer_pago) ? null : fecha_primer_pago;
+        const idConfig = (tipo_pago === 'CONTADO' || !id_config) ? null : parseInt(id_config);
+        const fPrimerPago = (tipo_pago === 'CONTADO' || !fecha_primer_pago) ? null : fecha_primer_pago;
 
         // Ejecutamos el SP enviando el array de objetos como un string JSON
         const [rows] = await db.query(
@@ -17,8 +17,8 @@ const postRoles = async (req, res = response) => {
                 id_usuario,
                 id_cliente,
                 tipo_pago,
-                id_config,
-                fecha_primer_pago,
+                idConfig,
+                fPrimerPago,
                 JSON.stringify(detalles)
             ]
         )

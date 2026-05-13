@@ -6,7 +6,7 @@ const { getSupplierRegister,
         getSupplierStatus,
         postSupplierRegister,
         putSupplierRegister,
-        deleteSupplierRegister } = require('../controllers/suppliersRoutes')
+        deleteSupplierRegister } = require('../controllers/suppliersController')
 
 const router = Router()
 
