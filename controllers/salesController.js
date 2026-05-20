@@ -1,7 +1,43 @@
 const { response } = require('express')
 const db = require('../config/db')
 
-const postRoles = async (req, res = response) => {
+const getSalesExpirationDate = async (req, res) => {
+
+    const { id_venta } = req.query
+
+    try {
+
+        const [rows] = await db.query(
+            "CALL sp_obtener_vencimiento_venta(?)",
+            [id_venta]
+        )
+        
+        const result = rows[0][0]
+
+        if (result.ok) {
+
+            res.status(200).json({
+                status: 200,
+                result
+            })
+        } else {
+
+            res.status(400).json({
+                status: 400,
+                result
+            })
+        }
+
+    } catch (error) {
+        console.error("Error en la fecha último pago:", error)
+        res.status(500).json({
+            ok: false,
+            msg: "Error de servidor al obtener la fecha de último pago"
+        })
+    }
+}
+
+const postSales = async (req, res = response) => {
 
     const { id_usuario, id_cliente, tipo_pago, id_config, fecha_primer_pago, detalles } = req.body
 
@@ -49,5 +85,6 @@ const postRoles = async (req, res = response) => {
 }
 
 module.exports = {
-    postRoles
+    getSalesExpirationDate,
+    postSales
 }

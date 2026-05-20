@@ -2,9 +2,14 @@ const { Router } = require('express')
 const { check } = require('express-validator')
 
 const { validationFiels } = require('../middlewares/validation-fields')
-const { postRoles } = require('../controllers/salesController')
+const { getSalesExpirationDate, postSales } = require('../controllers/salesController')
 
 const router = Router()
+
+router.get( '/sales_expirationdate', [
+    check('id_venta').isInt().withMessage('Código venta no válido.'),
+    validationFiels
+], getSalesExpirationDate )
 
 router.post( '/sales_register', [
     check('id_usuario').isInt().withMessage('Código usuario no válido.'),
@@ -20,6 +25,6 @@ router.post( '/sales_register', [
         .notEmpty().withMessage('Fecha de primer pago es obligatoria.')
         .isISO8601().withMessage('Formato de fecha inválido (YYYY-MM-DD).'),
     validationFiels
-], postRoles )
+], postSales )
 
 module.exports = router
