@@ -18,6 +18,7 @@ class Server {
             login:                  `${process.env.PATH_URL}/${process.env.STAGE}`,
             product:                `${process.env.PATH_URL}/${process.env.STAGE}`,
             userRegister:           `${process.env.PATH_URL}/${process.env.STAGE}`,
+            receivables:            `${process.env.PATH_URL}/${process.env.STAGE}`,
             reports:                `${process.env.PATH_URL}/${process.env.STAGE}`,
             roles:                  `${process.env.PATH_URL}/${process.env.STAGE}`,
             sales:                  `${process.env.PATH_URL}/${process.env.STAGE}`,
@@ -63,6 +64,7 @@ class Server {
         this.app.use( this.paths.login, require( '../routes/loginRoutes' ) )
         this.app.use( this.paths.product, require( '../routes/productsRoutes' ) )
         this.app.use( this.paths.userRegister, require( '../routes/userRegisterRoutes' ) )
+        this.app.use( this.paths.receivables, require( '../routes/receivablesRoutes' ) )
         this.app.use( this.paths.reports, require( '../routes/reportsRoutes' ) )
         this.app.use( this.paths.roles, require( '../routes/rolesRoutes' ) )
         this.app.use( this.paths.sales, require( '../routes/salesRoutes' ) )
