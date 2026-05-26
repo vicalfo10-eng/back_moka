@@ -5,8 +5,6 @@ const postPayments = async (req, res = response) => {
 
     const { installment_id, receivable_id, user_id, amount, payment_method, reference, payment_date } = req.body
 
-    console.log('Datos recibidos para registrar pago:', installment_id, receivable_id, user_id, amount, payment_method, reference, payment_date)
-
     try {
 
         // Llamar procedimiento almacenado
