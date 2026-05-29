@@ -24,8 +24,17 @@ const postPayments = async (req, res = response) => {
         const result = rows[0][0]
 
         return res.status(result.status).json({
-            ok: result.status === 201,
-            msg: result.msg
+            status: result.status === 201,
+            success: result.ok === 1,
+            msg: result.msg,
+            payment_data: {
+                receipt_number: result.receipt_number,
+                date: new Date(result.date).toLocaleString('es-CR'), // Formato local
+                customer_name: result.customer_name,
+                invoice_ref: result.invoice_ref,
+                amount_paid: amount, // El monto enviado en el body
+                new_balance: result.nuevo_saldo
+    }
         })
 
     } catch (error) {
