@@ -10,10 +10,7 @@ const { getProductRegister,
 
 const router = Router()
 
-router.get( '/product_register', [
-    check( 'codigo', 'El código es obligatorio.' ).not().isEmpty(),
-    validationFiels
-], getProductRegister)
+router.get( '/product_register', [], getProductRegister)
 
 router.get( '/product_status', [], getProductStatus )
 

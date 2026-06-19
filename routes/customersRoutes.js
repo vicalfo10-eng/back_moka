@@ -6,10 +6,7 @@ const { getCustomerRegister, getCustomerAll , postCustomerRegister, putCustomerR
 
 const router = Router()
 
-router.get( '/customer_register', [
-    check( 'identificacion', 'El número de identificación es obligatorio.' ).not().isEmpty(),
-    validationFiels
-], getCustomerRegister)
+router.get( '/customer_register', [], getCustomerRegister)
 
 router.get( '/customer_all', [], getCustomerAll )
 

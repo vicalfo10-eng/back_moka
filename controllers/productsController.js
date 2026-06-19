@@ -3,20 +3,27 @@ const db = require('../config/db')
 
 const getProductRegister = async (req, res = response) => {
 
-    const { codigo } = req.query
+    const { term } = req.query
 
     try {
 
         // Llamar procedimiento almacenado
         const [rows] = await db.query(
             "CALL sp_obtener_producto(?)",
-            [ codigo ]
+            [ term || '' ]
         )
 
-        const result = rows[0][0] // Resultado del SELECT dentro del SP
+        const result = rows[0]
 
-        return res.status(result.status).json({
-            ok: result.status === 200,
+        if (!result || result.length === 0) {
+            return res.status(404).json({
+                ok: false,
+                msg: "No se encontraron productos con el criterio especificado."
+            })
+        }
+
+        return res.status(200).json({
+            ok: true,
             result: result
         })
         

@@ -10,10 +10,7 @@ const { getSupplierRegister,
 
 const router = Router()
 
-router.get( '/supplier_register', [
-    check( 'identificacion', 'El número de identificación es obligatorio.' ).not().isEmpty(),
-    validationFiels
-], getSupplierRegister)
+router.get( '/supplier_register', [], getSupplierRegister)
 
 router.get( '/supplier_status', [], getSupplierStatus )
 
